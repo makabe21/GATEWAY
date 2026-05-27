@@ -1,30 +1,32 @@
+version: '3.8'
+
 services:
 
-   traefik:
-     image: traefik:v2.10
-     command:
-     - "--api.insecure=true"
-     - "--providers.file.filename=/etc/traefik/traefik_dynamic.yml"
-     - "--entypoints.web.address=:80"
-     ports:
-       -"80:80"
-       -"8080:8080"
-     volumes:
-       -./traefik_dynamic.yml:/etc/traefik/traefik_dynamic.yml
-     networks:
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=true"
+      - "--providers.file.filename=/etc/traefik/traefik_dynamic.yml"
+      - "--entrypoints.web.address=:80" # Corregido typo: era entrypoints, no entypoints
+    ports:
+      - "80:80"       # Corregido: espacio después del guion
+      - "8080:8080"   # Corregido: espacio después del guion
+    volumes:
+      - ./traefik_dynamic.yml:/etc/traefik/traefik_dynamic.yml
+    networks:
       - web
 
-   usuarios:
+  usuarios:
     build: ./usuarios
     networks:
-     - web
+      - web
 
-   cursos:
+  cursos:
     build: ./cursos
     networks:
-     - web
+      - web
 
-   networks:
-    web:
-     external: false
-  
+# NOTA: Este bloque va completamente a la izquierda, fuera de "services"
+networks:
+  web:
+    driver: bridge # Usamos 'driver: bridge' ya que le pusiste 'external: false' (es decir, que lo cree este compose)
