@@ -1,0 +1,30 @@
+services:
+
+   traefik:
+     image: traefik:v2.10
+     command:
+     - "--api.insecure=true"
+     - "--providers.file.filename=/etc/traefik/traefik_dynamic.yml"
+     - "--entypoints.web.address=:80"
+     ports:
+       -"80:80"
+       -"8080:8080"
+     volumes:
+       -./traefik_dynamic.yml:/etc/traefik/traefik_dynamic.yml
+     networks:
+      - web
+
+   usuarios:
+    build: ./usuarios
+    networks:
+     - web
+
+   cursos:
+    build: ./cursos
+    networks:
+     - web
+
+   networks:
+    web:
+     external: false
+  

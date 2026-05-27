@@ -1,0 +1,22 @@
+http:
+  routes:
+   usuarios:
+   rule: "PathPrefix ('/usuarios')"
+   service: usuarios
+
+   cursos:
+   rule: "PathPrefix('/cursos)"
+   service: cursos
+
+  service:
+   usuarios:
+   loadBalancer:
+     servers:
+     -url: "http://usuarios:8001"
+
+   cursos:
+   loadBalancer:
+     servers:
+     -url: "http://usuarios:8002"
+     
+
