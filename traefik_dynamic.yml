@@ -1,24 +1,46 @@
 http:
   routers:
-    router-usuarios:
-      rule: "PathPrefix(`/usuarios`)"
-      service: service-usuarios
+    router-suma:
+      rule: "PathPrefix(`/suma`)"
+      service: service-suma
       entryPoints:
         - web
 
-    router-cursos:
-      rule: "PathPrefix(`/cursos`)"
-      service: service-cursos
+    router-resta:
+      rule: "PathPrefix(`/resta`)"
+      service: service-resta
+      entryPoints:
+        - web
+
+    router-multiplicacion:
+      rule: "PathPrefix(`/multiplicacion`)"
+      service: service-multiplicacion
+      entryPoints:
+        - web
+
+    router-division:
+      rule: "PathPrefix(`/division`)"
+      service: service-division
       entryPoints:
         - web
 
   services:
-    service-usuarios:
+    service-suma:
       loadBalancer:
         servers:
-          - url: "http://usuarios:8000" 
+          - url: "http://suma:8001"
 
-    service-cursos:
+    service-resta:
       loadBalancer:
         servers:
-          - url: "http://cursos:8000"   
+          - url: "http://resta:8002"
+
+    service-multiplicacion:
+      loadBalancer:
+        servers:
+          - url: "http://multiplicacion:8003"
+
+    service-division:
+      loadBalancer:
+        servers:
+          - url: "http://division:8004"
